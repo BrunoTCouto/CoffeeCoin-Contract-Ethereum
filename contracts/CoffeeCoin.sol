@@ -29,6 +29,9 @@ contract CoffeeCoin{
     }
 
     function addStockToCoffeeMachine(address coffeeMachineAddr, uint quantity) public {
+        if(quantity < 0){
+            revert();
+        }
         coffeeMachines[coffeeMachineAddr].stock += quantity; 
     }
 
@@ -42,14 +45,13 @@ contract CoffeeCoin{
     // COFFEE MACHINE FUNCTIONS =======================
 
     // USER FUNCTIONS =======================
-    function buyCoffee(address CoffeeMachineAddress) public returns(bool){ //NOT DONE
+    function buyCoffee(address CoffeeMachineAddress) public { //NOT DONE
         if (users[msg.sender].credit > coffeeMachines[CoffeeMachineAddress].priceByUnit && coffeeMachines[CoffeeMachineAddress].stock >= 1) {
             coffeeMachines[CoffeeMachineAddress].stock -= 1;
             coffeeMachines[CoffeeMachineAddress].credit += coffeeMachines[CoffeeMachineAddress].priceByUnit;
             users[msg.sender].credit -= coffeeMachines[CoffeeMachineAddress].priceByUnit;
-            return true;
         }
-        return false;
+        revert():
     }
 
     // USER FUNCTIONS =======================

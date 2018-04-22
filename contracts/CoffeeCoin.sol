@@ -4,13 +4,13 @@ contract CoffeeCoin{
 
     // CONSTRUCTING MY "OBJECTS" =======================
     struct CoffeeMachine{
-        uint priceByUnit;
-        uint capsules;
-        uint credit;
+        int priceByUnit;
+        int capsules;
+        int credit;
     }
 
     struct User{
-        uint credit;
+        int credit;
         bool seller;
     }
     // CONSTRUCTING MY "OBJECTS" =======================
@@ -34,21 +34,21 @@ contract CoffeeCoin{
     // CONSTRUCTOR =======================
 
     // COFFEE MACHINE FUNCTIONS =======================
-    function newCoffeeMachine(address coffeeMachineAddr, uint initialPriceByUnit, uint initialStock) public onlySeller{
+    function newCoffeeMachine(address coffeeMachineAddr, int initialPriceByUnit, int initialStock) public onlySeller{
         coffeeMachines[coffeeMachineAddr] = CoffeeMachine(initialPriceByUnit, initialStock, 0);
     }
 
-    function addStockToCoffeeMachine(address coffeeMachineAddr, uint quantity) public onlySeller{
+    function addStockToCoffeeMachine(address coffeeMachineAddr, int quantity) public onlySeller{
         require(quantity > 0);
         coffeeMachines[coffeeMachineAddr].capsules += quantity; 
     }
 
-    function changeCoffeePrice(address coffeeMachineAddr, uint newPriceByUnit) public onlySeller{
+    function changeCoffeePrice(address coffeeMachineAddr, int newPriceByUnit) public onlySeller{
         require(newPriceByUnit > 0);
         coffeeMachines[coffeeMachineAddr].priceByUnit = newPriceByUnit; 
     }
 
-    function auditCoffeeMachine(address coffeeMachineAddr) public onlySeller constant returns(address, uint ,uint, uint){
+    function auditCoffeeMachine(address coffeeMachineAddr) public onlySeller constant returns(address, int ,int, int){
         return (coffeeMachineAddr, coffeeMachines[coffeeMachineAddr].priceByUnit, coffeeMachines[coffeeMachineAddr].capsules, coffeeMachines[coffeeMachineAddr].credit);
     }
     // COFFEE MACHINE FUNCTIONS =======================
@@ -61,11 +61,11 @@ contract CoffeeCoin{
         users[msg.sender].credit -= coffeeMachines[CoffeeMachineAddress].priceByUnit;
     }
 
-    function msgSenderCreditsBalance() public constant returns(uint){
+    function msgSenderCreditsBalance() public constant returns(int){
         return users[msg.sender].credit;
     }
 
-    function addCredits(address userAddr, uint quantity) public onlySeller{
+    function addCredits(address userAddr, int quantity) public onlySeller{
         require(quantity > 0);
         users[userAddr].credit += quantity;
     }

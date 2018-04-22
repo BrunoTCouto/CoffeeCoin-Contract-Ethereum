@@ -2,18 +2,18 @@
 <br>
 1. install Ganache
 <br>http://truffleframework.com/ganache/
-<br>
+<br><br>
 2. install truffle
 <br>$ npm install -g truffle
 <br>http://truffleframework.com/
-<br>
+<br><br>
 3. open Ganache
-<br>
+<br><br>
 4. execute commands
 <br>4.1 truffle compile
 <br>4.2 truffle migrate --network development --reset
 <br>4.3 truffle console
-<br>
+<br><br>
 5. inside truffle console execute
 <br>5.1 CoffeeCoin.deployed().then((b) => {a = b})
 <br>

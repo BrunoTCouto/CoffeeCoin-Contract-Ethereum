@@ -39,12 +39,12 @@ contract CoffeeCoin{
     }
 
     function addStockToCoffeeMachine(address coffeeMachineAddr, uint quantity) public onlySeller{
-        if(quantity <= 0) revert();
+        require(quantity > 0);
         coffeeMachines[coffeeMachineAddr].capsules += quantity; 
     }
 
     function changeCoffeePrice(address coffeeMachineAddr, uint newPriceByUnit) public onlySeller{
-        if(newPriceByUnit < 0) revert();
+        require(newPriceByUnit > 0);
         coffeeMachines[coffeeMachineAddr].priceByUnit = newPriceByUnit; 
     }
 
@@ -55,9 +55,7 @@ contract CoffeeCoin{
 
     // USER FUNCTIONS =======================
     function buyCoffee(address CoffeeMachineAddress) public {
-        if (coffeeMachines[CoffeeMachineAddress].capsules < 1 || users[msg.sender].credit < coffeeMachines[CoffeeMachineAddress].priceByUnit) {
-            revert();
-        }
+        require(coffeeMachines[CoffeeMachineAddress].capsules > 0 && users[msg.sender].credit >= coffeeMachines[CoffeeMachineAddress].priceByUnit);
         coffeeMachines[CoffeeMachineAddress].capsules -= 1;
         coffeeMachines[CoffeeMachineAddress].credit += coffeeMachines[CoffeeMachineAddress].priceByUnit;
         users[msg.sender].credit -= coffeeMachines[CoffeeMachineAddress].priceByUnit;
@@ -68,7 +66,7 @@ contract CoffeeCoin{
     }
 
     function addCredits(address userAddr, uint quantity) public onlySeller{
-        if(quantity <= 0) revert();
+        require(quantity > 0);
         users[userAddr].credit += quantity;
     }
     // USER FUNCTIONS =======================
